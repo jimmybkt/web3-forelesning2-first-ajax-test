@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>Vanilla JS Test</title>
+
+</head>
+<body>
+
+<div>
+    <h3>Her kommer innhold fra tekstfil:
+        <span id="fileContentSpan"></span>
+    </h3>
+</div>
+
+<script>
+    var AJAX_APP = {
+        //Attributes
+        fileName: "file.txt",
+        
+        //HTML objects
+        fileContentSpan: null,
+        
+        //init
+        init: function(){
+            var setHTMLObjects = function(){
+                AJAX_APP.fileContentSpan = 
+                document.getElementById("fileContentSpan");
+                //alert("Det virker!");
+            }();
+            
+            setInterval(function(){
+                AJAX_APP.doAjaxGET(); 
+            },4000);
+            
+        },//end init
+        
+        doAjaxGET: function(){
+            var xhr = null; 
+            
+            if(window.XMLHttpRequest){
+                xhr = new XMLHttpRequest();
+            }
+            
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState === 4){
+                    AJAX_APP.fileContentSpan.innerHTML = 
+                    xhr.responseText;
+                }
+            }
+            
+            
+            xhr.open("GET", AJAX_APP.fileName, true);//3 argument: skal dette kallet være asynkront? 
+            xhr.send();
+        }
+        
+    };//end AJAX_APP 
+    AJAX_APP.init();
+</script>    
+    
+</body>
+</html>
